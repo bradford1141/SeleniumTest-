@@ -51,14 +51,13 @@ login(driver)
 
 # first, count the number of job cards on hand by going to the employee portal
 profile(driver)
-employeePortal(driver)
+#employeePortal(driver)
 # myPitchCards(driver)
 
 time.sleep(3)
 
 # get all the rows in the employer portal table (assume only one table exists on the page)
 jobTable = driver.find_elements_by_tag_name('tr')
-
 # count the number of rows; -1 is needed to account for the header row
 num_rows = len(jobTable) - 1
 print('The original number of job cards:', num_rows)
@@ -71,20 +70,29 @@ print('The original number of job cards:', num_rows)
 #employerportal = driver.find_element_by_xpath('/html/body/app-root/p-sidebar/div/div/div/app-welcome-page-header/div/div[2]/span[2]')
 employerportal = WebDriverWait(driver,5).until(EC.element_to_be_clickable((By.XPATH, '/html/body/app-root/p-sidebar/div/div/div/app-welcome-page-header/div/div[2]/span[2]')))
 employerportal.click()
+print("Click employer portal")
 
 # create a new job pitch card
 createPitchCard = WebDriverWait(driver, 5).until(EC.element_to_be_clickable((By.XPATH, '/html/body/app-root/main/app-account-employer-portal/div[1]/div/div/div[1]/div[1]/div[2]/div[2]')))
 createPitchCard.click()
+print("Click create pitch card")
 #createPitchCard(driver)
 #selectJob(driver)
 
+#select job pitch card
+jobcard = WebDriverWait(driver,5).until(EC.element_to_be_clickable((By.XPATH, '/html/body/div[1]/div/div[2]/div/app-choose-pitchcard/div/div/div[2]/div[3]/div[3]/button')))
+jobcard.click()
+print("Select job pitch card")
 
-# Click on the "ADDPITCHCARDS" button in "How many Job PitchCards would you like
-# to create now?" window.
-# time.sleep(5)
-# numCards = driver.find_element_by_xpath(
-#   '/html/body/div[1]/div/div[2]/div/app-create-team-pitchcard/div/div[1]/div[2]/div[1]/p-inputnumber/span/input'
-# )
+numcard = WebDriverWait(driver,5).until(EC.element_to_be_clickable((By.XPATH, '/html/body/div[2]/div/div[2]/app-create-team-pitchcard/div/div[1]/div[2]/div[1]/p-inputnumber/span/input')))
+numcard.send_keys(Keys.BACK_SPACE)
+numcard.send_keys('1')
+print("one job card")
+
+#add pitch cards
+addpitchcard = WebDriverWait(driver,5).until(EC.element_to_be_clickable((By.XPATH, '/html/body/div[2]/div/div[2]/app-create-team-pitchcard/div/div[2]/button')))
+addpitchcard.click()
+print("Add pitch card")
 
 # some debug info
 #print('element', numCards)
@@ -93,17 +101,6 @@ createPitchCard.click()
 #print('aria-valuenow', numCards.get_attribute("aria-valuenow"))
 #print('aria-valumin', numCards.get_attribute("aria-valumin"))
 #print('aria-valuemax', numCards.get_attribute("aria-valuemax"))
-
-# clear the number of job cards to create.  This will reset to 1.
-# numCards.clear()
-
-# click the add pitchcards button
-# addPitchCards = driver.find_element_by_xpath(
-#   '/html/body/div[1]/div/div[2]/div/app-create-team-pitchcard/div/div[2]/button'
-# )
-# addPitchCards.click()
-# time.sleep(2)
-#print('click add pitchcards')
 
 # selects the job option when prompted with what pitch card to create
 selectJob(driver)
@@ -133,11 +130,11 @@ fillInInfo(driver)
 #   print('success')
 
 
-time.sleep(3)
-driver.find_element_by_css_selector('body > app-root > main > app-history-favorites-layout > div > div > div > div > div > div.p-col-12.p-md-8.p-lg-9.container-layout > app-account-employer-portal > div.ng-star-inserted > div > div > div.ep-body.ng-star-inserted > app-employer-portal-table > div > p-table > div > div > table > tbody > tr:nth-child(1) > td:nth-child(2) > span').click()
+# time.sleep(3)
+# driver.find_element_by_css_selector('body > app-root > main > app-history-favorites-layout > div > div > div > div > div > div.p-col-12.p-md-8.p-lg-9.container-layout > app-account-employer-portal > div.ng-star-inserted > div > div > div.ep-body.ng-star-inserted > app-employer-portal-table > div > p-table > div > div > table > tbody > tr:nth-child(1) > td:nth-child(2) > span').click()
 
-#firstLink = driver.find_element_by_class_name("ng-star-inserted")
-#WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.CLASS_NAME, firstLink[0]))).click()
+firstLink = driver.find_element_by_class_name("ng-star-inserted")
+WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.CLASS_NAME, firstLink[0]))).click()
 
 
 logout(driver)
